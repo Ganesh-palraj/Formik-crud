@@ -21,9 +21,19 @@ const Teacheraction = () => {
     });
   };
 
+  const validate = (values) => {
+    let { avatar , name , teachingsubject , schoolname } = values
+    let errors = {}
+    if (!name){
+      errors.name("Name is required")
+    }
+    return errors
+  }
+
   const formik = useFormik({
     initialValues,
     onSubmit,
+    validate
   });
 
   const nav = useNavigate();
