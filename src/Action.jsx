@@ -5,17 +5,40 @@ import Context from "./Context";
 import { useFormik } from "formik";
 
 const Action = () => {
+  const initialValues = {
+    name: "",
+    avatar: "",
+    rollno: "",
+    schoolname: "",
+  };
+
+  const onSubmit = (values) => {
+    contextData.addOrUpdateStudents({ id, values });
+    formik.resetForm;
+  };
+
+  const validate = (values) => {
+    let { name, avatar, rollno, schoolname } = values;
+    let errors = {};
+    if (!avatar) {
+      errors.avatar = "Avatar is required";
+    }
+    if (!name) {
+      errors.name = "Name is required";
+    }
+    if (!rollno) {
+      errors.rollno = "Roll No is required";
+    }
+    if (!schoolname) {
+      errors.schoolname = "School Name is required";
+    }
+    return errors;
+  };
+
   const formik = useFormik({
-    initialValues: {
-      name: "",
-      avatar: "",
-      rollno: "",
-      schoolname: "",
-    },
-    onSubmit: (values) => {
-      contextData.addOrUpdateStudents({ id, values });
-      formik.resetForm;
-    },
+    initialValues,
+    onSubmit,
+    validate,
   });
 
   const contextData = useContext(Context);
@@ -47,6 +70,8 @@ const Action = () => {
           disabled={state.isView === "true" ? true : false}
         />
 
+        {formik.errors.name ? formik.errors.name : ""}
+
         <label htmlFor="name">Image</label>
         <Input
           type="text"
@@ -55,6 +80,8 @@ const Action = () => {
           onChange={formik.handleChange}
           disabled={state.isView === "true" ? true : false}
         />
+
+        {formik.errors.avatar ? formik.errors.avatar : ""}
 
         <label htmlFor="name">Description</label>
         <Input
@@ -65,6 +92,8 @@ const Action = () => {
           disabled={state.isView === "true" ? true : false}
         />
 
+        {formik.errors.rollno ? formik.errors.rollno : ""}
+
         <label htmlFor="name">Job Title</label>
         <Input
           type="text"
@@ -73,6 +102,8 @@ const Action = () => {
           onChange={formik.handleChange}
           disabled={state.isView === "true" ? true : false}
         />
+
+        {formik.errors.schoolname ? formik.errors.schoolname : ""}
 
         <Button
           type="submit"

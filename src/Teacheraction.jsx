@@ -22,18 +22,27 @@ const Teacheraction = () => {
   };
 
   const validate = (values) => {
-    let { avatar , name , teachingsubject , schoolname } = values
-    let errors = {}
-    if (!name){
-      errors.name("Name is required")
+    let { avatar, name, teachingsubject, schoolname } = values;
+    let errors = {};
+    if (!avatar) {
+      errors.avatar = "avatar is required";
     }
-    return errors
-  }
+    if (!name) {
+      errors.name = "Name is required";
+    }
+    if (!teachingsubject) {
+      errors.teachingsubject = "Teaching subject is required";
+    }
+    if (!schoolname) {
+      errors.schoolname = "schoolname is required";
+    }
+    return errors;
+  };
 
   const formik = useFormik({
     initialValues,
     onSubmit,
-    validate
+    validate,
   });
 
   const nav = useNavigate();
@@ -64,6 +73,7 @@ const Teacheraction = () => {
           onChange={formik.handleChange}
           disabled={state.isView === "true" ? true : false}
         />
+        {formik.errors.avatar ? formik.errors.avatar : ""}
 
         <label htmlFor="name">Name</label>
         <Input
@@ -76,6 +86,8 @@ const Teacheraction = () => {
           onChange={formik.handleChange}
         />
 
+        {formik.errors.name ? formik.errors.name : ""}
+
         <label htmlFor="teachingsubject">Subject</label>
         <Input
           type="text"
@@ -87,6 +99,8 @@ const Teacheraction = () => {
           disabled={state.isView === "true" ? true : false}
         />
 
+        {formik.errors.teachingsubject ? formik.errors.teachingsubject : ""}
+
         <label htmlFor="schoolname">School name</label>
         <Input
           type="text"
@@ -97,6 +111,7 @@ const Teacheraction = () => {
           onChange={formik.handleChange}
           disabled={state.isView === "true" ? true : false}
         />
+        {formik.errors.schoolname ? formik.errors.schoolname : ""}
 
         <Button
           color="success"
